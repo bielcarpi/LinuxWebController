@@ -1,10 +1,25 @@
 #!/bin/bash
-echo -e "Content-type: text/html\n"
-info=$1
-arr=${$info// / }
+echo -e "Content-type: text/plain\n"
+IN=$(cat)
+echo "$IN"
+username=$(echo "$IN" | cut -d "&" -f1)
+pwd=$(echo "$IN" | cut -d "&" -f2)
+echo "username sent: $username"
+echo "pwd sent: $pwd"
 
-echo -e "$1\n"
-username=${arr[0]}
-echo "username: $username"
-echo ${su -c $username whoami}
+if [ "$(getent passwd "$username")" ]
+then
+    echo "The user exists."
+    pwdEncrypted=$(sudo grep -w pwd /etc/shadow | cut -d ":" -f2) #user info in /etc/shadow
+    echo "$pwdEncrypted"
+    algorithm=$(echo "$pwdEncrypted" | cut -d "$" -f2) #algorithm
+    salt=$(echo "$pwdEncrypted" | cut -d "$" -f3) #salt
+    export algorithm
+    export salt
+else
+    echo "The user $username doesn't exist."
+fi
+
+
+
 

@@ -1,19 +1,21 @@
-(function ($) {
-    "use strict";
+"use strict";
 
-    async function login(){
-        let email = $('#floatingInput').innerHTML;
-        let pwd = $('#floatingPassword').innerHTML;
+function login(){
+    $('#signInBtn').prop('disabled', true);
 
-        const response = await fetch("/cgi-bin/login.sh", {
-            method: 'POST',
-            body: email + ' ' + pwd
+    fetch("/cgi-bin/login.sh", {
+        method: 'POST',
+        body: $('#floatingInput').val() + '&' + $('#floatingPassword').val()
+    })
+        .then((response) => response.text())
+        .then((data) => {
+            $('#signInBtn').prop('disabled', false);
+            console.log(data);
         });
 
-        console.log(response);
-        window.location.href = "/home.html";
-    }
+}
 
+(function ($) {
     // Spinner
     var spinner = function () {
         setTimeout(function () {
