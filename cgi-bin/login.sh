@@ -15,7 +15,7 @@ then
     newPwdEncrypted=$(perl -le 'print crypt("$ENV{pwd}","\$$ENV{algorithm}\$$ENV{salt}\$")')
     if [ "$pwdEncrypted" == "$newPwdEncrypted" ]
     then
-      echo "/home.html"
+      echo "/dashboard.html"
     else
       echo "Error. The password for $username is incorrect."
     fi
