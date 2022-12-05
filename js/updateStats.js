@@ -75,8 +75,13 @@ function updateStats(){
             $("#ram").text(arr[3] + " GB");
             $("#disk").text(arr[4] + "/" + arr[5] + " GB");
             $("#uptime").text(arr[6]);
-            for(let i = 7; i < 17; i++){ //From lines 7 to 16, last server logins
-                console.log(arr[i]);
+            for(let i = 0; i < 10; i++){ //From lines 7 to 16, last server logins
+                let cleanData = arr[i+7].replace(/  +/g, ' ');
+                let fields = cleanData.split(" ");
+                $(("#" + i + "-user")).text(fields[0]);
+                $(("#" + i + "-from")).text(fields[1]);
+                $(("#" + i + "-ip")).text(fields[2]);
+                $(("#" + i + "-time")).text(arr[i+7]);
             }
 
             arrCPU.pop();
