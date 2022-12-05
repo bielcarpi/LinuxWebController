@@ -10,9 +10,14 @@ function login(){
         .then((response) => response.text())
         .then((data) => {
             $('#signInBtn').prop('disabled', false);
-            console.log(data);
+            if(data.startsWith("/")){
+                window.location.href = data;
+            }
+            else{
+                $('#error-text').addClass('alert alert-danger');
+                $('#error-text').text(data);
+            }
         });
-
 }
 
 (function ($) {

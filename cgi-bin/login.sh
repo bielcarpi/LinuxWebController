@@ -1,23 +1,26 @@
 #!/bin/bash
 echo -e "Content-type: text/plain\n"
 IN=$(cat)
-echo "$IN"
 username=$(echo "$IN" | cut -d "&" -f1)
 pwd=$(echo "$IN" | cut -d "&" -f2)
-echo "username sent: $username"
-echo "pwd sent: $pwd"
 
 if [ "$(getent passwd "$username")" ]
 then
-    echo "The user exists."
-    pwdEncrypted=$(sudo grep -w pwd /etc/shadow | cut -d ":" -f2) #user info in /etc/shadow
-    echo "$pwdEncrypted"
+    pwdEncrypted=$(grep -w "root" /etc/shadow | cut -d ":" -f2) #user info in /etc/shadow (apache user needs to have read persmission)
     algorithm=$(echo "$pwdEncrypted" | cut -d "$" -f2) #algorithm
     salt=$(echo "$pwdEncrypted" | cut -d "$" -f3) #salt
     export algorithm
     export salt
+    export pwd
+    newPwdEncrypted=$(perl -le 'print crypt("$ENV{pwd}","\$$ENV{algorithm}\$$ENV{salt}\$")')
+    if [ "$pwdEncrypted" == "$newPwdEncrypted" ]
+    then
+      echo "/home.html"
+    else
+      echo "Error. The password for $username is incorrect."
+    fi
 else
-    echo "The user $username doesn't exist."
+    echo "Error. The user $username doesn't exist."
 fi
 
 
