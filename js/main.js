@@ -20,6 +20,31 @@ function login(){
         });
 }
 
+function shutdown(){
+    fetch("/cgi-bin/shutdown.sh", {
+        method: 'POST',
+        body: "shutdown"
+    }).then(r => {
+        insertModal("Server Shutdown", "The server has been shut down successfully.");
+    });
+}
+
+function restart(){
+    fetch("/cgi-bin/shutdown.sh", {
+        method: 'POST',
+        body: "restart"
+    }).then(r => {
+        insertModal("Server Restart", "The server has been restarted successfully.");
+    });
+}
+
+function insertModal(title, message){
+    $('#modal').modal('hide');
+    $('#modal-title').text(title);
+    $('#modal-content').text(message);
+    $('#modal').modal('show');
+}
+
 (function ($) {
     // Spinner
     var spinner = function () {

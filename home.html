@@ -158,17 +158,32 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <span class="d-none d-lg-inline-flex">User</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a onclick="shutdown()" class="dropdown-item" role="button">Shutdown Server</a>
+                            <a onclick="restart()" class="dropdown-item" role="button">Restart Server</a>
+                            <a href="/" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
             </nav>
             <!-- Navbar End -->
+            <div id="modal" class="modal" style="background-color: black !important" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-title"></h5>
+                        </div>
+                        <div class="modal-body">
+                            <p id="modal-content"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" onclick="$('#modal').modal('hide')" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
             <!-- Sale & Revenue Start -->
