@@ -76,8 +76,7 @@ function updateStats(){
             $("#disk").text(arr[4] + "/" + arr[5] + " GB");
             $("#uptime").text(arr[6]);
             for(let i = 0; i < 10; i++){ //From lines 7 to 16, last server logins
-                let cleanData = arr[i+7].replace(/  +/g, ' ');
-                let fields = cleanData.split(" ");
+                let fields = arr[i+7].split(" ");
                 $(("#" + i + "-user")).text(fields[0]);
                 $(("#" + i + "-from")).text(fields[1]);
                 $(("#" + i + "-ip")).text(fields[2]);

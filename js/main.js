@@ -38,6 +38,57 @@ function restart(){
     });
 }
 
+function showProcesses(){
+    fetch("/cgi-bin/processes.sh", {
+        method: 'POST',
+    })
+        .then((response) => response.text())
+        .then((data) => {
+            let arr = data.split("\n");
+            for(let i = 0; i < arr.length-2; i++) {
+                let element = arr[i].split(' ');
+                let html = `
+                    <tr>
+                        <td>${element[1]}</td>
+                        <td>${element[0]}</td>
+                        <td>${element[2]}%</td>
+                        <td>${element[3]}%</td>
+                        <td>${element[4]}</td>
+                        <td>${element[5]}</td>
+                        <td>${element[7]}</td>
+                        <td>${element[8]}</td>
+                        <td>${element[10]}</td>
+                        <td><div class="input-group mb-3">
+                            <input id="${element[1]}" type="number" class="form-control" placeholder="Seconds" aria-label="Seconds" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                            <button onclick="stopProcess(${element[1]})" class="btn btn-outline-primary" type="button">Stop</button>
+                            </div>
+                        </div></td>
+                    </tr>`;
+                $('#process-holder').append(html);
+            }
+        });
+}
+
+function stopProcess(pid){
+    let id = "#" + pid;
+    let seconds = $(id).val();
+    fetch("/cgi-bin/processes.sh", {
+        method: 'POST',
+        body: pid + '&' + seconds
+    });
+
+    insertModal("Process Stopped", "The process with PID " + pid + " has been stopped for " + seconds + " seconds.");
+}
+
+function showCronTasks(){
+
+}
+
+function addCronTask(){
+
+}
+
 function insertModal(title, message){
     $('#modal').modal('hide');
     $('#modal-title').text(title);
@@ -108,129 +159,5 @@ function insertModal(title, message){
     // Chart Global Color
     Chart.defaults.color = "#6C7293";
     Chart.defaults.borderColor = "#000000";
-
-
-    // Worldwide Sales Chart
-    var ctx1 = $("#worldwide-sales").get(0).getContext("2d");
-    var myChart1 = new Chart(ctx1, {
-        type: "bar",
-        data: {
-            labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
-            datasets: [{
-                    label: "USA",
-                    data: [15, 30, 55, 65, 60, 80, 95],
-                    backgroundColor: "rgba(235, 22, 22, .7)"
-                },
-                {
-                    label: "UK",
-                    data: [8, 35, 40, 60, 70, 55, 75],
-                    backgroundColor: "rgba(235, 22, 22, .5)"
-                },
-                {
-                    label: "AU",
-                    data: [12, 25, 45, 55, 65, 70, 60],
-                    backgroundColor: "rgba(235, 22, 22, .3)"
-                }
-            ]
-            },
-        options: {
-            responsive: true
-        }
-    });
-
-
-    // Salse & Revenue Chart
-
-
-
-    // Single Line Chart
-    var ctx3 = $("#line-chart").get(0).getContext("2d");
-    var myChart3 = new Chart(ctx3, {
-        type: "line",
-        data: {
-            labels: [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150],
-            datasets: [{
-                label: "Salse",
-                fill: false,
-                backgroundColor: "rgba(235, 22, 22, .7)",
-                data: [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15]
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-
-
-    // Single Bar Chart
-    var ctx4 = $("#bar-chart").get(0).getContext("2d");
-    var myChart4 = new Chart(ctx4, {
-        type: "bar",
-        data: {
-            labels: ["Italy", "France", "Spain", "USA", "Argentina"],
-            datasets: [{
-                backgroundColor: [
-                    "rgba(235, 22, 22, .7)",
-                    "rgba(235, 22, 22, .6)",
-                    "rgba(235, 22, 22, .5)",
-                    "rgba(235, 22, 22, .4)",
-                    "rgba(235, 22, 22, .3)"
-                ],
-                data: [55, 49, 44, 24, 15]
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-
-
-    // Pie Chart
-    var ctx5 = $("#pie-chart").get(0).getContext("2d");
-    var myChart5 = new Chart(ctx5, {
-        type: "pie",
-        data: {
-            labels: ["Italy", "France", "Spain", "USA", "Argentina"],
-            datasets: [{
-                backgroundColor: [
-                    "rgba(235, 22, 22, .7)",
-                    "rgba(235, 22, 22, .6)",
-                    "rgba(235, 22, 22, .5)",
-                    "rgba(235, 22, 22, .4)",
-                    "rgba(235, 22, 22, .3)"
-                ],
-                data: [55, 49, 44, 24, 15]
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-
-
-    // Doughnut Chart
-    var ctx6 = $("#doughnut-chart").get(0).getContext("2d");
-    var myChart6 = new Chart(ctx6, {
-        type: "doughnut",
-        data: {
-            labels: ["Italy", "France", "Spain", "USA", "Argentina"],
-            datasets: [{
-                backgroundColor: [
-                    "rgba(235, 22, 22, .7)",
-                    "rgba(235, 22, 22, .6)",
-                    "rgba(235, 22, 22, .5)",
-                    "rgba(235, 22, 22, .4)",
-                    "rgba(235, 22, 22, .3)"
-                ],
-                data: [55, 49, 44, 24, 15]
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-
-
-
 })(jQuery);
 

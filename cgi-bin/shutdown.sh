@@ -12,8 +12,3 @@ elif [ "$IN" == "restart" ]
 then
   sudo reboot
 fi
-
-
-
-
-

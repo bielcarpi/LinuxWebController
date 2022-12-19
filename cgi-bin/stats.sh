@@ -8,9 +8,5 @@ grep -c ^processor /proc/cpuinfo #print num of cores
 free -m | awk 'NR==2{printf "%.2f\n", $2/1000 }' #print GBs of RAM in the System
 df -h | awk '$NF=="/"{printf "%d\n", $3}' #print disk used (in GB)
 df -h | awk '$NF=="/"{printf "%d\n", $2}' #print disk in the System (in GB)
-uptime -p | awk -F " " '{printf "%dh %dm\n", $2, $4}' #print disk in the System (in GB)
-last | head -n 10 #print last 10 logins
-
-
-
-
+uptime -p | awk -F " " '{printf "%dh %dm\n", $2, $4}' #print uptime
+last -n 10 | tr -s ' ' #print last 10 logins

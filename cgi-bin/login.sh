@@ -1,4 +1,6 @@
 #!/bin/bash
+# Check whether a login for the system is correct.
+# If not, send an error message.
 echo -e "Content-type: text/plain\n"
 IN=$(cat)
 username=$(echo "$IN" | cut -d "&" -f1)
