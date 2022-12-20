@@ -58,12 +58,15 @@ function showProcesses(){
                         <td>${element[7]}</td>
                         <td>${element[8]}</td>
                         <td>${element[10]}</td>
-                        <td><div class="input-group mb-3">
+                        <td><div class="input-group mb-2 mt-2">
                             <input id="${element[1]}" type="number" class="form-control" placeholder="Stop X Seconds" aria-label="Seconds" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                            <button onclick="stopProcess(${element[1]})" class="btn btn-outline-primary" type="button">Stop</button>
+                            <button onclick="stopProcess(${element[1]})" class="btn btn-primary" type="button">Stop</button>
                             </div>
-                        </div></td>
+                        </td>
+                        <td>
+                            <button onclick="killProcess(${element[1]})" class="btn btn-outline-primary" type="button">Kill ${element[1]}</button>
+                        </td>
                     </tr>`;
                 $('#process-holder').append(html);
             }
@@ -80,6 +83,17 @@ function stopProcess(pid){
 
     insertModal("Process Stopped", "The process with PID " + pid + " has been stopped for " + seconds + " seconds.");
 }
+
+function killProcess(pid){
+    fetch("/cgi-bin/processes.sh", {
+        method: 'POST',
+        body: pid + '&kill'
+    });
+
+    insertModal("Process Killed", "The process with PID " + pid + " has been killed.");
+    setTimeout(() => {location.reload()}, 1000);
+}
+
 
 function showCronTasks(){
     fetch("/cgi-bin/cron.sh", {
@@ -117,7 +131,7 @@ function addCronTask(){
     });
 
     insertModal("Cron Task Added", "The task" + task + " has been added to cron.");
-    setTimeout(() => {location.reload()}, 1500);
+    setTimeout(() => {location.reload()}, 1000);
 }
 
 function deleteCronTask(taskNum){
@@ -127,7 +141,7 @@ function deleteCronTask(taskNum){
     });
 
     insertModal("Cron Task Removed", "The task has been deleted from cron.");
-    setTimeout(() => {location.reload()}, 1500);
+    setTimeout(() => {location.reload()}, 1000);
 }
 
 
