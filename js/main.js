@@ -59,7 +59,7 @@ function showProcesses(){
                         <td>${element[8]}</td>
                         <td>${element[10]}</td>
                         <td><div class="input-group mb-3">
-                            <input id="${element[1]}" type="number" class="form-control" placeholder="Seconds" aria-label="Seconds" aria-describedby="basic-addon2">
+                            <input id="${element[1]}" type="number" class="form-control" placeholder="Stop X Seconds" aria-label="Seconds" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                             <button onclick="stopProcess(${element[1]})" class="btn btn-outline-primary" type="button">Stop</button>
                             </div>
@@ -82,12 +82,54 @@ function stopProcess(pid){
 }
 
 function showCronTasks(){
-
+    fetch("/cgi-bin/cron.sh", {
+        method: 'POST',
+    })
+        .then((response) => response.text())
+        .then((data) => {
+            console.log(data);
+            let arr = data.split("\n");
+            for(let i = 0; i < arr.length-1; i++) {
+                let element = arr[i].split(' ');
+                let html = `
+                    <tr>
+                        <td>${element[0]}</td>
+                        <td>${element[1]}</td>
+                        <td>${element[2]}</td>
+                        <td>${element[3]}</td>
+                        <td>${element[4]}</td>
+                        <td>${element[5]}</td>
+                        <td>
+                            <button onclick="deleteCronTask(${i+1})" class="btn btn-primary" type="button">Delete</button>
+                        </td>
+                    </tr>`;
+                $('#process-holder').append(html);
+            }
+        });
 }
 
 function addCronTask(){
+    let task = $("#minute").val() + " " + $("#hour").val() + " " + $("#dom").val() + " " +$("#month").val() + " " + $("#dow").val() + " " + $("#script").val();
 
+    fetch("/cgi-bin/cron.sh", {
+        method: 'POST',
+        body: "add&" + task
+    });
+
+    insertModal("Cron Task Added", "The task" + task + " has been added to cron.");
+    setTimeout(() => {location.reload()}, 1500);
 }
+
+function deleteCronTask(taskNum){
+    fetch("/cgi-bin/cron.sh", {
+        method: 'POST',
+        body: "rm&" + taskNum
+    });
+
+    insertModal("Cron Task Removed", "The task has been deleted from cron.");
+    setTimeout(() => {location.reload()}, 1500);
+}
+
 
 function insertModal(title, message){
     $('#modal').modal('hide');

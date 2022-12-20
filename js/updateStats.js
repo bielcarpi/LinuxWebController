@@ -27,8 +27,8 @@ const UPDATE_TIME = 1000; //in ms
             responsive: true,
             scales: {
                 y: {
-                    //max: 100,
-                    //min: 0
+                    max: 100,
+                    min: 0
                 }
             }
         }
@@ -50,8 +50,8 @@ const UPDATE_TIME = 1000; //in ms
             responsive: true,
             scales: {
                 y: {
-                    //max: 100,
-                    //min: 0
+                    max: 100,
+                    min: 0
                 }
             }
         }

@@ -24,7 +24,3 @@ then
 else
     echo "Error. The user $username doesn't exist."
 fi
-
-
-
-
