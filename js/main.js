@@ -101,7 +101,6 @@ function showCronTasks(){
     })
         .then((response) => response.text())
         .then((data) => {
-            console.log(data);
             let arr = data.split("\n");
             for(let i = 0; i < arr.length-1; i++) {
                 let element = arr[i].split(' ');
@@ -142,6 +141,61 @@ function deleteCronTask(taskNum){
 
     insertModal("Cron Task Removed", "The task has been deleted from cron.");
     setTimeout(() => {location.reload()}, 1000);
+}
+
+
+function showLogs(){
+    console.log("ei");
+}
+
+function showMusic(){
+    console.log("ei");
+}
+
+
+function showPackageFiltering(){
+    console.log("ei");
+}
+
+function addFilteringRule(){
+    console.log("ei");
+}
+
+function modifyFilteringRule(){
+    console.log("ei");
+}
+
+
+function showUsers(){
+    fetch("/cgi-bin/manage-users.sh", {
+        method: 'POST',
+    })
+        .then((response) => response.text())
+        .then((data) => {
+            let arr = data.split("\n");
+            for(let i = 0; i < arr.length-1; i++) {
+                let element = arr[i].split(':');
+                let html = `
+                    <tr>
+                        <td>${element[0]}</td>
+                        <td>${element[4]}</td>
+                        <td>${element[5]}</td>
+                        <td>${element[6]}</td>
+                        <td>
+                            <button onclick="deleteUser(${element[0]})" class="btn btn-primary" type="button">Delete</button>
+                        </td>
+                    </tr>`;
+                $('#process-holder').append(html);
+            }
+        });
+}
+
+function deleteUser(name){
+    console.log("ei");
+}
+
+function registerNewUser(){
+    console.log("ei");
 }
 
 
