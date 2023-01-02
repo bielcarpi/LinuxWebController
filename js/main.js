@@ -145,7 +145,21 @@ function deleteCronTask(taskNum){
 
 
 function showLogs(){
-    console.log("ei");
+    fetch("/cgi-bin/logs.sh", {
+        method: 'POST',
+    })
+        .then((response) => response.text())
+        .then((data) => {
+            let arr = data.split("\n");
+            for(let i = 0; i < arr.length-1; i++) {
+                console.log(arr[i]);
+                let html = `
+                    <tr>
+                        <td>${arr[i]}</td>
+                    </tr>`;
+                $('#process-holder').append(html);
+            }
+        });
 }
 
 function showMusic(){

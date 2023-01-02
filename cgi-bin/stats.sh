@@ -10,3 +10,4 @@ df -h | awk '$NF=="/"{printf "%d\n", $3}' #print disk used (in GB)
 df -h | awk '$NF=="/"{printf "%d\n", $2}' #print disk in the System (in GB)
 uptime -p | awk -F " " '{printf "%dh %dm\n", $2, $4}' #print uptime
 last -n 10 | tr -s ' ' #print last 10 logins
+sudo logger -p user.info "Stats sent to web"

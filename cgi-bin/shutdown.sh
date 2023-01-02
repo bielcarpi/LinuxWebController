@@ -7,8 +7,10 @@ IN=$(cat)
 
 if [ "$IN" == "shutdown" ]
 then
+  sudo logger -p user.info "System shutting down..."
   sudo poweroff
 elif [ "$IN" == "restart" ]
 then
+  sudo logger -p user.info "System rebooting..."
   sudo reboot
 fi

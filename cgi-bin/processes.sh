@@ -13,12 +13,15 @@ then
   seconds=$(echo "$IN" | cut -d "&" -f2)
   if [[ $seconds == "kill" ]]
   then
+    sudo logger -p user.info "Process with PID $pid killed"
     sudo kill "$pid" #Send a SIGTERM to process
   else
+    sudo logger -p user.info "User with PID $pid killed"
     sudo kill -STOP "$pid" #Send a SIGSTOP to process to pause it
     sleep "$seconds"
     sudo kill -CONT "$pid" #After X seconds, send a SIGCONT to process to resume it
   fi
 else
+  sudo logger -p user.info "Processes sent to web"
   ps aux | tr -s ' ' | tac #Output all processes, separating fields with only a ' '
 fi

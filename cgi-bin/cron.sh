@@ -14,14 +14,17 @@ then
   if [[ $action == "add" ]]
   then
     #Add new programmed task
+    sudo logger -p user.info "New programmed task added: $args"
     echo "$args" >> /etc/fcron/fcron-apache.conf
     sudo fcrontab -n /etc/fcron/fcron-apache.conf -u apache
   elif [[ $action == "rm" ]]
   then
     #Delete existing programmed task
+    sudo logger -p user.info "Existing programmed task deleted: $args"
     sudo sed -i "$args d" /etc/fcron/fcron-apache.conf
     sudo fcrontab -n /etc/fcron/fcron-apache.conf -u apache
   fi
 else
+  sudo logger -p user.info "Cron tasks sent to web"
   sudo fcrontab -l -u apache #Shows all the scheduled tasks from user apache
 fi
