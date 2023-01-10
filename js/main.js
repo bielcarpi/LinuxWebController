@@ -249,7 +249,7 @@ function showUsers(){
                         <td>${element[5]}</td>
                         <td>${element[6]}</td>
                         <td>
-                            <button onclick="deleteUser(${element[0]})" class="btn btn-primary" type="button">Delete</button>
+                            <button onclick="deleteUser('${element[0]}')" class="btn btn-primary" type="button">Delete</button>
                         </td>
                     </tr>`;
                 $('#process-holder').append(html);
@@ -258,11 +258,25 @@ function showUsers(){
 }
 
 function deleteUser(name){
-    console.log("ei");
+    fetch("/cgi-bin/manage-users.sh", {
+        method: 'POST',
+        body: "rm&" + name
+    });
+
+    insertModal("User Deleted", `The user ${name} has been deleted from the system.`);
+    setTimeout(() => {location.reload()}, 1000);
 }
 
 function registerNewUser(){
-    console.log("ei");
+    let user = $("#floatingText").val() + "|" + $("#floatingPassword").val();
+
+    fetch("/cgi-bin/manage-users.sh", {
+        method: 'POST',
+        body: "add&" + user
+    });
+
+    insertModal("User Added", "The user with name " + $("#floatingText").val() + " has been added to the system.");
+    setTimeout(() => {location.href = "/manage-users.html"}, 1000);
 }
 
 
