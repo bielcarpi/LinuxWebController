@@ -152,7 +152,6 @@ function showLogs(){
         .then((data) => {
             let arr = data.split("\n");
             for(let i = 0; i < arr.length-1; i++) {
-                console.log(arr[i]);
                 let html = `
                     <tr>
                         <td>${arr[i]}</td>
@@ -168,15 +167,69 @@ function showMusic(){
 
 
 function showPackageFiltering(){
-    console.log("ei");
+    fetch("/cgi-bin/package-filtering.sh", {
+        method: 'POST',
+    })
+        .then((response) => response.text())
+        .then((data) => {
+            let arr = data.split("\n");
+            for(let i = 0; i < arr.length-1; i++) {
+                let element = arr[i].split(' ');
+                let type = "", protocol = "", sip = "", dip = "", port = "", action = "";
+                for(let j = 0; j < element.length; j+=2){
+                    if(element[j] === "-A") type = element[j+1]
+                    else if(element[j] === "-p") protocol = element[j+1]
+                    else if(element[j] === "-s") sip = element[j+1]
+                    else if(element[j] === "-d") dip = element[j+1]
+                    else if(element[j] === "--dport") port = element[j+1]
+                    else if(element[j] === "-j") action = element[j+1]
+                }
+                let html = `
+                    <tr>
+                        <td>${type}</td>
+                        <td>${protocol}</td>
+                        <td>${sip}</td>
+                        <td>${dip}</td>
+                        <td>${port}</td>
+                        <td>${action}</td>
+                        <td>
+                            <button onclick="deleteFilteringRule('${arr[i].replace('-A ', '')}')" class="btn btn-primary" type="button">Delete</button>
+                        </td>
+                    </tr>`;
+                $('#process-holder').append(html);
+            }
+        });
 }
 
 function addFilteringRule(){
-    console.log("ei");
+    let rule = "";
+
+    if($("#type").val().length !== 0) rule += ($("#type").val() + " ");
+    if($("#protocol").val().length !== 0) rule += ("-p " + $("#protocol").val() + " ");
+    if($("#sip").val().length !== 0) rule += ("-s " + $("#sip").val() + " ");
+    if($("#dip").val().length !== 0) rule += ("-d " + $("#dip").val() + " ");
+    if($("#port").val().length !== 0) rule += ("--dport " + $("#port").val() + " ");
+    if($("#action").val().length !== 0) rule += ("-j " + $("#action").val() + " ");
+
+    if(rule.length === 0) return;
+
+    fetch("/cgi-bin/package-filtering.sh", {
+        method: 'POST',
+        body: "add&" + rule
+    });
+
+    insertModal("Filtering Rule Added", "The rule " + rule + " has been added to iptables.");
+    setTimeout(() => {location.reload()}, 1000);
 }
 
-function modifyFilteringRule(){
-    console.log("ei");
+function deleteFilteringRule(element){
+    fetch("/cgi-bin/package-filtering.sh", {
+        method: 'POST',
+        body: "rm&" + element
+    });
+
+    insertModal("Cron Task Removed", `The task ${element} has been deleted from cron.`);
+    setTimeout(() => {location.reload()}, 1000);
 }
 
 
@@ -284,4 +337,6 @@ function insertModal(title, message){
     Chart.defaults.color = "#6C7293";
     Chart.defaults.borderColor = "#000000";
 })(jQuery);
+
+
 

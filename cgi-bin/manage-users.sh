@@ -6,7 +6,6 @@ if [ -n "$IN" ] #If IN is not empty
 then
   action=$(echo "$IN" | cut -d "&" -f1)
   args=$(echo "$IN" | cut -d "&" -f2)
-  # rm&apache
 
   if [[ $action == "rm" ]]
   then

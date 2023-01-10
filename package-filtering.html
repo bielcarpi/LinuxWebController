@@ -132,43 +132,43 @@
                 <div class="bg-secondary text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h6 class="mb-0">Package Filtering Rules</h6>
-                        <a href="/cron.html">Refresh</a>
+                        <a href="/package-filtering.html">Refresh</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
                             <thead>
                             <tr class="text-white">
-                                <th scope="col">Minute</th>
-                                <th scope="col">Hour</th>
-                                <th scope="col">Day of the Month</th>
-                                <th scope="col">Month</th>
-                                <th scope="col">Day of the Week</th>
-                                <th scope="col">Script</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Protocol</th>
+                                <th scope="col">Source IP Address</th>
+                                <th scope="col">Destiny IP Address</th>
+                                <th scope="col">Port</th>
                                 <th scope="col">Action</th>
+                                <th scope="col">Submit</th>
                             </tr>
                             </thead>
                             <tbody id="process-holder">
                             <tr>
                                 <td><div class="input-group mb-2 mt-2">
-                                    <input id="minute" type="text" class="form-control" placeholder="Minute" aria-label="Minute" aria-describedby="basic-addon2">
+                                    <input id="type" type="text" class="form-control" placeholder="Type" aria-label="Type" aria-describedby="basic-addon2">
                                 </div></td>
                                 <td><div class="input-group mb-2 mt-2">
-                                    <input id="hour" type="text" class="form-control" placeholder="Hour" aria-label="Hour" aria-describedby="basic-addon2">
+                                    <input id="protocol" type="text" class="form-control" placeholder="TCP/UDP" aria-label="Protocol" aria-describedby="basic-addon2">
                                 </div></td>
                                 <td><div class="input-group mb-2 mt-2">
-                                    <input id="dom" type="text" class="form-control" placeholder="Day of the Month" aria-label="Day of the Month" aria-describedby="basic-addon2">
+                                    <input id="sip" type="text" class="form-control" placeholder="127.0.0.1" aria-label="Source IP" aria-describedby="basic-addon2">
                                 </div></td>
                                 <td><div class="input-group mb-2 mt-2">
-                                    <input id="month" type="text" class="form-control" placeholder="Month" aria-label="Month" aria-describedby="basic-addon2">
+                                    <input id="dip" type="text" class="form-control" placeholder="127.0.0.1" aria-label="Destination IP" aria-describedby="basic-addon2">
                                 </div></td>
                                 <td><div class="input-group mb-2 mt-2">
-                                    <input id="dow" type="text" class="form-control" placeholder="Day of the Week" aria-label="Day of the Week" aria-describedby="basic-addon2">
+                                    <input id="port" type="text" class="form-control" placeholder="Port" aria-label="Port" aria-describedby="basic-addon2">
                                 </div></td>
                                 <td><div class="input-group mb-2 mt-2">
-                                    <input id="script" type="text" class="form-control" placeholder="Script" aria-label="Script" aria-describedby="basic-addon2">
+                                    <input id="action" type="text" class="form-control" placeholder="Action" aria-label="Action" aria-describedby="basic-addon2">
                                 </div></td>
                                 <td>
-                                    <button onclick="addCronTask()" class="btn btn-primary" style="background-color: gray; border-color: gray" type="button">Add</button>
+                                    <button onclick="addFilteringRule()" class="btn btn-primary" style="background-color: gray; border-color: gray" type="button">Add</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -215,6 +215,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>showPackageFiltering()</script>
 </body>
 
 </html>
