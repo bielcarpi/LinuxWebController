@@ -162,7 +162,26 @@ function showLogs(){
 }
 
 function showMusic(){
-    console.log("ei");
+    fetch("/cgi-bin/music.sh", {
+        method: 'POST',
+    })
+        .then((response) => response.text())
+        .then((data) => {
+            let arr = data.split("\n");
+            for(let i = 0; i < arr.length-1; i++) {
+                let html = `
+                    <tr>
+                        <td>${arr[i].split("/")[3]}</td>
+                        <td>${arr[i]}</td>
+                        <td>
+                            <i class="fa fa-play me-2"></i>
+                            <i class="fa fa-pause me-2"></i>
+                            <i class="fa fa-stop me-2"></i>
+                        </td>
+                    </tr>`;
+                $('#process-holder').append(html);
+            }
+        });
 }
 
 
