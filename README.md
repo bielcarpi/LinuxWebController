@@ -21,6 +21,22 @@
     It allows you to see CPU and MEM usage, create cron tasks, see processes running, shutdown the machine, etc.
 </p>
 
+## Screenshots
+
+### Login
+![Login](img/login.png)
+
+### Dashboard - Monitor your system
+![Dashboard](img/dashboard.png)
+
+### Control Processes
+![Processes](img/processes.png)
+
+### Set Up Cron Tasks
+![Cron](img/cron.png)
+
+### Automount USB Devices with Music
+![Music](img/music.png)
 
 ## How To Use
 ```bash
